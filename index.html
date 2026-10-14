@@ -1,0 +1,722 @@
+<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مملكة الدراسة والحب لـ زوزتي ✨🌸</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Marhey:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pinkPastel: '#FFF5F7',
+                        pinkLight: '#FFD8E4',
+                        pinkMain: '#FF7B9C',
+                        pinkDark: '#D83F68',
+                        cream: '#FFF9F5',
+                        goldAccent: '#FFD700',
+                        lavenderPastel: '#F3E8FF',
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        marhey: ['Marhey', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #FFF5F7;
+            overflow-x: hidden;
+            background-image: radial-gradient(#FFB3C6 1px, transparent 1px);
+            background-size: 20px 20px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .title-font {
+            font-family: 'Marhey', cursive;
+        }
+
+        /* Cute Glassmorphism Cards optimized for Mobile & Desktop */
+        .cute-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 2px solid #FFD8E4;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px -4px rgba(255, 123, 156, 0.15);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        @media (min-width: 768px) {
+            .cute-card {
+                border-radius: 2rem;
+            }
+            .cute-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 16px 28px -6px rgba(255, 123, 156, 0.25);
+            }
+        }
+
+        /* Tactile Button Animations */
+        .cute-btn {
+            background: linear-gradient(135deg, #FF7B9C 0%, #D83F68 100%);
+            box-shadow: 0 4px 0px #A02345;
+            transition: all 0.12s ease;
+            touch-action: manipulation;
+        }
+        .cute-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0px #A02345;
+        }
+
+        .pulse-heart {
+            animation: heartBeat 1.4s infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.15); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.15); }
+            70% { transform: scale(1); }
+        }
+
+        /* Floating Animation */
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(4deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Canvas Overlay */
+        #sparkleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Flying Kisses / Hearts */
+        .kiss-emoji {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: flyUp 2.5s ease-out forwards;
+            font-size: 2.2rem;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.1));
+        }
+
+        @keyframes flyUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0.5) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-85vh) scale(1.5) rotate(360deg);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFF5F7;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF7B9C;
+            border-radius: 10px;
+        }
+
+        /* Vinyl Spin for Music Player */
+        .spin-vinyl {
+            animation: spin 6s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<!-- ... existing code ... -->
+<body class="text-gray-800 pb-28 pt-2 relative min-h-screen flex flex-col justify-between">
+
+    <!-- Sparkles Canvas -->
+    <canvas id="sparkleCanvas"></canvas>
+
+    <!-- Background Decorative Stickers (Hidden on very small screens to avoid clutter) -->
+    <div class="hidden sm:block fixed top-10 left-4 floating text-3xl opacity-60 pointer-events-none select-none z-0">🧸</div>
+    <div class="hidden sm:block fixed top-1/4 right-4 floating text-3xl opacity-60 pointer-events-none select-none z-0">📚</div>
+    <div class="hidden sm:block fixed bottom-24 left-6 floating text-4xl opacity-60 pointer-events-none select-none z-0">🌸</div>
+    <div class="hidden sm:block fixed bottom-1/3 right-6 floating text-3xl opacity-60 pointer-events-none select-none z-0">🎀</div>
+
+    <div class="max-w-4xl mx-auto px-3 sm:px-6 pt-2 sm:pt-6 relative z-10 w-full">
+
+        <!-- MUSIC PLAYER BAR (LOVE & MOTIVATION MUSIC) -->
+        <div class="cute-card p-3 sm:p-4 mb-4 sm:mb-6 bg-gradient-to-r from-white via-pinkPastel to-white border-2 border-pinkMain flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div id="vinylDisk" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-pinkMain flex items-center justify-center text-white text-lg sm:text-xl shadow-md transition-all">
+                    <i class="fa-solid fa-music"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xs sm:text-sm text-pinkDark flex items-center gap-1.5">
+                        <span>🎵</span> ألحان الحب والتحفيز لـ زوزتي
+                    </h3>
+                    <p id="musicStatusText" class="text-[10px] sm:text-xs text-gray-600 font-semibold mt-0.5">
+                        اضغطي تشغيل للاستماع للموسيقى الهادئة 🎧
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <button onclick="toggleBackgroundMusic()" id="playMusicBtn" class="cute-btn text-white text-xs sm:text-sm px-4 py-2 rounded-full font-bold flex items-center gap-2 cursor-pointer">
+                    <i id="playIcon" class="fa-solid fa-play"></i> <span id="playText">تشغيل الموسيقى</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- HEADER / HERO SECTION -->
+        <header class="text-center py-6 sm:py-8 px-4 sm:px-6 cute-card relative overflow-hidden mb-5 sm:mb-8">
+            <div class="absolute -top-6 -right-6 w-24 h-24 bg-pinkLight rounded-full blur-xl opacity-70"></div>
+            <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-pinkMain rounded-full blur-xl opacity-25"></div>
+
+            <span class="inline-block bg-pinkLight text-pinkDark text-[11px] sm:text-sm px-3 py-1 sm:px-4 sm:py-1.5 rounded-full font-bold mb-2 sm:mb-3 border border-pinkMain shadow-xs">
+                ✨ ركن الأميرة زوزتي المتميزة ✨
+            </span>
+            
+            <h1 class="title-font text-2xl sm:text-4xl md:text-5xl font-extrabold text-pinkDark mb-2 sm:mb-3 leading-relaxed">
+                أهلاً بجميلتي <span id="partnerNameDisplay" class="text-pinkMain underline decoration-wavy underline-offset-6 sm:underline-offset-8">زينب (زوزتي)</span> 🌸💖
+            </h1>
+            
+            <p class="text-xs sm:text-base text-gray-700 font-semibold max-w-xl mx-auto leading-relaxed px-2">
+                هذا المكان الصغير صُنِع بكل حب لكِ يا زوزتي الجميلة! دراستكِ هي خطواتكِ نحو مستقبلكِ الباهر، وأنا دائماً بجانبكِ لأشجعكِ وأفتخر بكِ! 👑✨
+            </p>
+
+            <div class="mt-4 sm:mt-6 flex justify-center gap-3 flex-wrap">
+                <button onclick="triggerKissEffect(event)" class="cute-btn text-white font-bold px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-sm sm:text-base flex items-center gap-2 cursor-pointer transition">
+                    <span class="pulse-heart text-base sm:text-lg">💋</span> إرسال بوسة وجرعة تحفيز لـ زوزتي!
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN GRID: CUSTOM MESSAGE & MOTIVATION CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-5 sm:mb-8">
+            
+            <!-- Love & Courage Message Card -->
+            <div class="md:col-span-2 cute-card p-5 sm:p-7 flex flex-col justify-between relative">
+                <div>
+                    <div class="flex items-center justify-between mb-3 border-b border-pinkLight pb-2.5">
+                        <h2 class="title-font text-lg sm:text-2xl font-bold text-pinkDark flex items-center gap-2">
+                            <span>💌</span> رسالة حب وتشجيع خاصة لـ زوزتي
+                        </h2>
+                        <span class="text-xl sm:text-2xl">👑</span>
+                    </div>
+
+                    <div id="customMessageDisplay" class="space-y-3 text-gray-700 leading-relaxed font-semibold text-sm sm:text-base whitespace-pre-line">
+                        <!-- Message populated dynamically -->
+                    </div>
+                </div>
+
+                <div class="mt-5 pt-3 border-t border-pinkLight flex justify-between items-center text-xs sm:text-sm font-bold text-pinkDark">
+                    <span>مُقدمة بكل الحب والوفاء ❤️</span>
+                    <span id="senderNameDisplay">من: خطيبكِ ومحبكِ الأبدي 💋</span>
+                </div>
+            </div>
+
+            <!-- Side Mascot & Quick Quote Card -->
+            <div class="flex flex-col gap-4 sm:gap-6">
+                <!-- Chibi Mascot Card -->
+                <div class="cute-card p-4 sm:p-5 text-center bg-gradient-to-b from-white to-pinkPastel flex flex-col items-center justify-center">
+                    <div class="relative w-20 h-20 sm:w-24 sm:h-24 mb-1 floating">
+                        <!-- Kawaii Mascot SVG -->
+                        <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+                            <circle cx="100" cy="110" r="65" fill="#8B4513"/>
+                            <circle cx="100" cy="100" r="45" fill="#FFE0BD"/>
+                            <path d="M 60,85 Q 100,55 140,85 Q 120,65 100,70 Q 80,65 60,85 Z" fill="#8B4513"/>
+                            <ellipse cx="85" cy="98" rx="5" ry="8" fill="#333"/>
+                            <ellipse cx="115" cy="98" rx="5" ry="8" fill="#333"/>
+                            <circle cx="83" cy="95" r="2" fill="#FFF"/>
+                            <circle cx="113" cy="95" r="2" fill="#FFF"/>
+                            <ellipse cx="75" cy="105" rx="6" ry="4" fill="#FF7B9C" opacity="0.6"/>
+                            <ellipse cx="125" cy="105" rx="6" ry="4" fill="#FF7B9C" opacity="0.6"/>
+                            <path d="M 93,110 Q 100,118 107,110" stroke="#333" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                            <path d="M 120,60 L 140,50 L 135,70 Z" fill="#FF7B9C"/>
+                            <path d="M 120,60 L 140,70 L 135,50 Z" fill="#FF7B9C"/>
+                            <circle cx="120" cy="60" r="5" fill="#D83F68"/>
+                        </svg>
+                    </div>
+                    <h3 class="title-font text-sm sm:text-base font-bold text-pinkDark">مشجعة زوزتي اللطيفة 🎀</h3>
+                    <p class="text-[11px] sm:text-xs text-gray-600 mt-1 font-semibold">"أنتِ أذكى وأجمل فتاة! واصلي القراءة يا بطلة!"</p>
+                </div>
+
+                <!-- Random Motivational Quote Card -->
+                <div class="cute-card p-5 text-center flex flex-col justify-center items-center flex-1 bg-pinkMain text-white relative overflow-hidden">
+                    <div class="text-2xl sm:text-3xl mb-1">🌟</div>
+                    <p id="affirmationText" class="font-bold text-xs sm:text-sm leading-snug transition-opacity duration-300">
+                        "ابتسامتكِ يا زوزتي هي كل الدنيا، ونجاحكِ هو أجمل فرحة بقلبي!"
+                    </p>
+                    <button onclick="nextAffirmation()" class="mt-3 bg-white text-pinkDark font-bold px-3.5 py-1 rounded-full text-xs hover:bg-pinkPastel transition shadow-xs cursor-pointer">
+                        عبارة جديدة لـ زوزتي ✨
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- POMODORO STUDY TIMER & TO-DO SECTION -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-5 sm:mb-8">
+            
+            <!-- Cute Pomodoro Timer -->
+            <div class="cute-card p-5 sm:p-7 text-center relative">
+                <span class="absolute top-3 left-4 text-xl sm:text-2xl">⏰</span>
+                <h2 class="title-font text-xl sm:text-2xl font-bold text-pinkDark mb-1">مؤقت دراسة زوزتي</h2>
+                <p class="text-[11px] sm:text-xs text-gray-600 mb-4 sm:mb-6 font-semibold">ركزي لـ 25 دقيقة، ثم خذي استراحة دافئة ورائعة! ☕🌸</p>
+
+                <!-- Timer Circle Display -->
+                <div class="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto flex items-center justify-center rounded-full border-6 sm:border-8 border-pinkLight bg-pinkPastel shadow-inner mb-4 sm:mb-6">
+                    <span id="timerDisplay" class="title-font text-3xl sm:text-5xl font-extrabold text-pinkDark">
+                        25:00
+                    </span>
+                </div>
+
+                <!-- Timer Controls -->
+                <div class="flex justify-center gap-2.5">
+                    <button id="startBtn" onclick="toggleTimer()" class="cute-btn text-white font-bold px-5 py-2 sm:px-6 sm:py-2.5 rounded-full flex items-center gap-2 cursor-pointer text-xs sm:text-sm">
+                        <i class="fa-solid fa-play text-xs"></i> <span id="startBtnText">ابدأي التركيز</span>
+                    </button>
+                    <button onclick="resetTimer()" class="bg-gray-200 text-gray-700 font-bold px-4 py-2 sm:px-5 sm:py-2.5 rounded-full hover:bg-gray-300 transition cursor-pointer text-xs sm:text-sm">
+                        <i class="fa-solid fa-rotate-right"></i> إعادة
+                    </button>
+                </div>
+            </div>
+
+            <!-- Interactive Study To-Do List -->
+            <div class="cute-card p-5 sm:p-7 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="title-font text-lg sm:text-2xl font-bold text-pinkDark flex items-center gap-2">
+                            <span>📝</span> قائمة إنجازات زوزتي
+                        </h2>
+                        <span class="text-[10px] sm:text-xs bg-pinkLight text-pinkDark font-bold px-2.5 py-1 rounded-full" id="taskCounter">0/0 أكملت</span>
+                    </div>
+
+                    <!-- Add Task Input -->
+                    <div class="flex gap-2 mb-3 sm:mb-4">
+                        <input type="text" id="taskInput" placeholder="أضيفي درس أو مادة لجدولكِ..." class="flex-1 px-3.5 py-2 rounded-xl border-2 border-pinkLight focus:border-pinkMain focus:outline-none text-xs sm:text-sm font-semibold">
+                        <button onclick="addTask()" class="bg-pinkMain hover:bg-pinkDark text-white px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm transition cursor-pointer">
+                            إضافة ✨
+                        </button>
+                    </div>
+
+                    <!-- Task List -->
+                    <ul id="taskList" class="space-y-2 max-h-48 sm:max-h-52 overflow-y-auto pr-1">
+                        <!-- Dynamic tasks inserted here -->
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- GALLERY & STUDY ELEMENTS -->
+        <section class="cute-card p-5 sm:p-7 mb-6 sm:mb-8 text-center">
+            <h2 class="title-font text-xl sm:text-2xl font-bold text-pinkDark mb-4 sm:mb-6 flex items-center justify-center gap-2">
+                <span>🎨</span> ركن إلهام زوزتي
+            </h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                <div class="p-3 sm:p-4 bg-pinkPastel rounded-xl sm:rounded-2xl border border-pinkLight hover:scale-105 transition cursor-pointer">
+                    <div class="text-3xl sm:text-4xl mb-1">📚🌸</div>
+                    <div class="font-bold text-xs sm:text-sm text-pinkDark">كتب ومعرفة</div>
+                    <div class="text-[10px] sm:text-xs text-gray-500 mt-0.5">عقل زوزتي يزهر</div>
+                </div>
+
+                <div class="p-3 sm:p-4 bg-pinkPastel rounded-xl sm:rounded-2xl border border-pinkLight hover:scale-105 transition cursor-pointer">
+                    <div class="text-3xl sm:text-4xl mb-1">☕✨</div>
+                    <div class="font-bold text-xs sm:text-sm text-pinkDark">مشروب دافئ</div>
+                    <div class="text-[10px] sm:text-xs text-gray-500 mt-0.5">وقود الإنجاز والنشاط</div>
+                </div>
+
+                <div class="p-3 sm:p-4 bg-pinkPastel rounded-xl sm:rounded-2xl border border-pinkLight hover:scale-105 transition cursor-pointer">
+                    <div class="text-3xl sm:text-4xl mb-1">🧸🎀</div>
+                    <div class="font-bold text-xs sm:text-sm text-pinkDark">دبدوب التشجيع</div>
+                    <div class="text-[10px] sm:text-xs text-gray-500 mt-0.5">دائماً في ظهركِ</div>
+                </div>
+
+                <div class="p-3 sm:p-4 bg-pinkPastel rounded-xl sm:rounded-2xl border border-pinkLight hover:scale-105 transition cursor-pointer">
+                <div class="text-3xl sm:text-4xl mb-1">🎓👑</div>
+                <div class="font-bold text-xs sm:text-sm text-pinkDark">حلم التخرج</div>
+                <div class="text-[10px] sm:text-xs text-gray-500 mt-0.5">قريباً يا ملكتي</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-3 text-gray-600 font-semibold text-xs sm:text-sm">
+        صُنع بـ ❤️ وبكل تحفيز لـ <span id="footerPartnerName" class="text-pinkDark font-bold">زينب (زوزتي)</span> | أنتِ قادرة على تحقيق المعجزات! ✨
+    </footer>
+
+</div>
+
+<!-- AUDIO & INTERACTIVE LOGIC -->
+<script>
+    /* --- WEB AUDIO SYNTHESIZER FOR BACKGROUND MUSIC & SOUND EFFECTS --- */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        let isMusicPlaying = false;
+        let musicTimer = null;
+        let musicNoteIndex = 0;
+
+        // Soft, romantic melody note frequencies (Hz) for background audio synthesis
+        const romanticMelody = [
+            523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 523.25, 392.00,
+            440.00, 523.25, 659.25, 587.33, 523.25, 440.00, 392.00, 523.25
+        ];
+
+        function playMelodyNote() {
+            if (!isMusicPlaying) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const freq = romanticMelody[musicNoteIndex];
+            musicNoteIndex = (musicNoteIndex + 1) % romanticMelody.length;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            // Gentle ambient attack and delay for background focus music
+            gain.gain.setValueAtTime(0, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.65);
+        }
+
+        function toggleBackgroundMusic() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const playIcon = document.getElementById('playIcon');
+            const playText = document.getElementById('playText');
+            const musicStatusText = document.getElementById('musicStatusText');
+            const vinylDisk = document.getElementById('vinylDisk');
+
+            if (isMusicPlaying) {
+                isMusicPlaying = false;
+                clearInterval(musicTimer);
+                playIcon.className = "fa-solid fa-play";
+                playText.innerText = "تشغيل الموسيقى";
+                musicStatusText.innerText = "الموسيقى متوقفة مؤقتاً ⏸️";
+                vinylDisk.classList.remove('spin-vinyl');
+            } else {
+                isMusicPlaying = true;
+                playMelodyNote();
+                musicTimer = setInterval(playMelodyNote, 400);
+                playIcon.className = "fa-solid fa-pause";
+                playText.innerText = "إيقاف الموسيقى";
+                musicStatusText.innerText = "تعزف الآن: ألحان الحب والتركيز لـ زوزتي 🎶💖";
+                vinylDisk.classList.add('spin-vinyl');
+            }
+        }
+
+        function playCuteSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2);
+
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.2);
+        }
+
+        function playSuccessSound() {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const notes = [523.25, 659.25, 783.99, 1046.50];
+        notes.forEach((freq, index) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.18, audioCtx.currentTime + index * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + index * 0.08 + 0.2);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(audioCtx.currentTime + index * 0.08);
+            osc.stop(audioCtx.currentTime + index * 0.08 + 0.2);
+        });
+    }
+
+    /* --- CONTENT LOGIC FOR ZEINAB (ZOZTI) --- */
+    const defaultName = "زينب (زوزتي)";
+    const defaultMessage = `إلى زوزتي وحبيبتي وأميرتي الجميلات زينب.. 🌸💖
+
+أكتب لكِ هذه الكلمات لأذكّركِ دائماً كم أنتِ قوية، ذكية، ومتميزة! اعرف أن الدراسة قد تتطلب جَهداً وتعباً، لكن ثقتي بذكائكِ وإصراركِ لا حدود لها.
+
+"تذكري دائماً يا زوزتي: كل صفحة تحفظينها اليوم وكل درس تركزين فيه، هو خطوة نحو مستقبل مشرق يشبه جمال قلبكِ ابتسامتكِ الساحرة!" ✨🎓
+
+أنتِ لستِ فقط شاطرة، أنتِ أملي وفخري وأجمل ما في حياتي. افتخري بنفسكِ وواصلي الإنجاز بثقة، وأنا دائماً بجانبكِ أصادقكِ وأشجعكِ بكل حب! 💋🧸`;
+    const defaultSender = "خطيبكِ ومحبكِ الأبدي 💋";
+
+    function loadCustomContent() {
+        document.getElementById('partnerNameDisplay').innerText = defaultName;
+        document.getElementById('footerPartnerName').innerText = defaultName;
+        document.getElementById('customMessageDisplay').innerText = defaultMessage;
+        document.getElementById('senderNameDisplay').innerText = `من: ${defaultSender}`;
+    }
+
+    /* --- KISSES & FLOATING EMOJIS EFFECT --- */
+    function triggerKissEffect(e) {
+            playCuteSound();
+
+            confetti({
+                particleCount: 35,
+                spread: 55,
+                origin: { y: 0.75 },
+                colors: ['#FF7B9C', '#FFD8E4', '#FFD700', '#D83F68']
+            });
+
+            const kissEmojis = ['💋', '😘', '💖', '✨', '🌸', '👑', '🧸', '💋'];
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const emojiEl = document.createElement('div');
+                    emojiEl.className = 'kiss-emoji';
+                    emojiEl.innerText = kissEmojis[Math.floor(Math.random() * kissEmojis.length)];
+                    emojiEl.style.left = (Math.random() * 80 + 10) + 'vw';
+                    emojiEl.style.bottom = '10px';
+                    document.body.appendChild(emojiEl);
+
+                    setTimeout(() => emojiEl.remove(), 2500);
+                }, i * 110);
+            }
+        }
+
+        /* --- RANDOM AFFIRMATIONS FOR ZEINAB --- */
+        const affirmations = [
+            "أنتِ قوية وشاطرة يا زوزتي، وابتسامتكِ تضيء كل حياتي 💕",
+            "مستقبلكِ باهر ومشرق، وأنا سندكِ وظهركِ دائماً ✨",
+            "كل درس تحفظينه اليوم يا زوزتي هو خطوة نحو حلمكِ الكبير 🌸",
+            "لا توجد صعوبة تقف أمام ذكاء أميرتي زينب! 👑",
+            "خذي نفساً عميقاً، ابتسمي، وواصلِي يا بطلة 😘",
+            "العالم ينبهر بإنجازاتكِ الجميلة يا زوزتي 🧸"
+        ];
+        let currentAffIndex = 0;
+
+        function nextAffirmation() {
+            playCuteSound();
+            currentAffIndex = (currentAffIndex + 1) % affirmations.length;
+            const affText = document.getElementById('affirmationText');
+            affText.style.opacity = '0';
+            setTimeout(() => {
+                affText.innerText = `"${affirmations[currentAffIndex]}"`;
+                affText.style.opacity = '1';
+            }, 200);
+        }
+
+        /* --- POMODORO TIMER LOGIC --- */
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timerDisplay').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            playCuteSound();
+            const startBtnText = document.getElementById('startBtnText');
+            if (isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                startBtnText.innerText = 'واصلي التركيز';
+            } else {
+                isRunning = true;
+                startBtnText.innerText = 'إيقاف مؤقت';
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isRunning = false;
+                        playSuccessSound();
+                        confetti({ particleCount: 90, spread: 70 });
+                        alert('أحسنتِ يا زوزتي البطلة! أنجزتِ 25 دقيقة تركيز بنجاح رائع! 🌸✨ خذي استراحة الآن 😘');
+                        resetTimer();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timeLeft = 25 * 60;
+            updateTimerDisplay();
+            document.getElementById('startBtnText').innerText = 'ابدأي التركيز';
+        }
+
+        /* --- STUDY TO-DO LIST LOGIC --- */
+        let tasks = [
+            { text: 'قراءة الفصل الأول بتركيز 📖', completed: false },
+            { text: 'مراجعة الملاحظات الذهبية ✨', completed: true },
+            { text: 'شرب كوب شاي دافئ والاستراحة ☕', completed: false }
+        ];
+
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = '';
+            let completedCount = 0;
+
+            tasks.forEach((task, index) => {
+                if (task.completed) completedCount++;
+
+                const li = document.createElement('li');
+                li.className = `flex items-center justify-between p-2 sm:p-2.5 rounded-xl border transition ${
+                    task.completed ? 'bg-pinkPastel/60 border-pinkLight text-gray-400 line-through' : 'bg-white border-pinkLight text-gray-800'
+                }`;
+
+                li.innerHTML = `
+                    <div class="flex items-center gap-2 cursor-pointer flex-1" onclick="toggleTask(${index})">
+                        <span class="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-pinkMain flex items-center justify-center text-[10px] sm:text-xs text-white ${task.completed ? 'bg-pinkMain' : ''}">
+                            ${task.completed ? '✓' : ''}
+                        </span>
+                        <span class="font-semibold text-xs sm:text-sm">${task.text}</span>
+                    </div>
+                    <button onclick="deleteTask(${index})" class="text-gray-400 hover:text-pinkDark text-xs px-2 cursor-pointer">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                taskList.appendChild(li);
+            });
+
+            document.getElementById('taskCounter').innerText = `${completedCount}/${tasks.length} أكملت`;
+        }
+
+        function addTask() {
+            const input = document.getElementById('taskInput');
+            const text = input.value.trim();
+            if (text !== '') {
+                playCuteSound();
+                tasks.push({ text: text, completed: false });
+                input.value = '';
+                renderTasks();
+            }
+        }
+
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            if (tasks[index].completed) {
+                playSuccessSound();
+                confetti({
+                    particleCount: 20,
+                    spread: 40,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                playCuteSound();
+            }
+            renderTasks();
+        }
+
+        function deleteTask(index) {
+            playCuteSound();
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        document.getElementById('taskInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addTask();
+        });
+
+        /* --- BACKGROUND SPARKLES EFFECT --- */
+        const canvas = document.getElementById('sparkleCanvas');
+        const ctx = canvas.getContext('2d');
+        let sparkles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Sparkle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 1;
+                this.alpha = Math.random();
+                this.speed = Math.random() * 0.02 + 0.005;
+            }
+            update() {
+                this.alpha += this.speed;
+                if (this.alpha > 1 || this.alpha < 0) this.speed = -this.speed;
+                if (this.alpha < 0) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.abs(this.alpha);
+                ctx.fillStyle = '#FFD700';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 25; i++) sparkles.push(new Sparkle());
+
+    function animateSparkles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        sparkles.forEach(s => { s.update(); s.draw(); });
+        requestAnimationFrame(animateSparkles);
+    }
+
+    window.onload = function() {
+        loadCustomContent();
+        renderTasks();
+        animateSparkles();
+    };
+</script>
+</body>
+</html>
